@@ -2,12 +2,19 @@
 #include <ESP8266WiFi.h>
 #include <WiFiClient.h>
 
-#include <env.h>
-#include <routes/routes.h>
+#include <FirebaseESP8266.h>
+
 #include <setup.h>
+
+FirebaseData fbdo;
+int led = 5;
+int ledValue = 0;
 
 void setup()
 {
+  pinMode(btn, INPUT);
+  pinMode(led, OUTPUT);
+
   Serial.begin(115200);
   connectWifi();
   connectFirebase();
@@ -15,4 +22,6 @@ void setup()
 
 void loop()
 {
+  Firebase.RTDB.getInt(&fbdo, "/led", &ledValue);
+  digitalWrite(led, ledValue);
 }
