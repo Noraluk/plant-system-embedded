@@ -1,9 +1,18 @@
 #include <Arduino.h>
+#include <ESP8266WiFi.h>
+#include <WiFiClient.h>
 
-void setup() {
-  // put your setup code here, to run once:
+#include <env.h>
+#include <routes/routes.h>
+#include <setup.h>
+
+void setup()
+{
+  Serial.begin(115200);
+  connectWifi();
+  connectFirebase();
 }
 
-void loop() {
-  // put your main code here, to run repeatedly:
+void loop()
+{
 }

@@ -1,0 +1,10 @@
+#include "Arduino.h"
+#include "env.example.h"
+
+String EX_WIFI_SSID = "SSID";
+String EX_WIFI_PASSWORD = "PASSWORD";
+String EX_API_KEY = "API_KEY";
+String EX_DATABASE_URL = "DATABASE_URL";
+String EX_USER_EMAIL = "USER_EMAIL";
+String EX_USER_PASSWORD = "USER_PASSWORD";
+String EX_DATABASE_SECRET = "DATABASE_SECRET";
