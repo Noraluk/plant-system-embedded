@@ -12,7 +12,6 @@ int ledValue = 0;
 
 void setup()
 {
-  pinMode(btn, INPUT);
   pinMode(led, OUTPUT);
 
   Serial.begin(115200);
@@ -22,6 +21,6 @@ void setup()
 
 void loop()
 {
-  Firebase.RTDB.getInt(&fbdo, "/led", &ledValue);
+  Firebase.RTDB.getInt(&fbdo, "/pump/1", &ledValue);
   digitalWrite(led, ledValue);
 }
