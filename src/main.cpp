@@ -7,12 +7,13 @@
 #include <setup.h>
 
 FirebaseData fbdo;
-int led = 5;
-int ledValue = 0;
+int pump = 5;
+int pumpVal = 0;
+int isAsk = false;
 
 void setup()
 {
-  pinMode(led, OUTPUT);
+  pinMode(pump, OUTPUT);
 
   Serial.begin(115200);
   connectWifi();
@@ -21,6 +22,13 @@ void setup()
 
 void loop()
 {
-  Firebase.RTDB.getInt(&fbdo, "/pump/1", &ledValue);
-  digitalWrite(led, ledValue);
+  Firebase.RTDB.getBool(&fbdo, "/pump/1/is_ask", &isAsk);
+  if (isAsk)
+  {
+    Firebase.RTDB.setBool(&fbdo, "/pump/1/is_ask", false);
+    Firebase.RTDB.setBool(&fbdo, "/pump/1/is_working", true);
+  }
+
+  Firebase.RTDB.getInt(&fbdo, "/pump/1/is_active", &pumpVal);
+  digitalWrite(pump, pumpVal);
 }
