@@ -9,7 +9,7 @@
 FirebaseData fbdo;
 int pump = 5;
 int pumpVal = 0;
-int isAsk = false;
+bool isAsk = false;
 
 void setup()
 {
@@ -22,7 +22,7 @@ void setup()
 
 void loop()
 {
-  Firebase.RTDB.getBool(&fbdo, "/pump/1/is_ask", &isAsk);
+  Firebase.RTDB.getBool(&fbdo, "pump/1/is_ask", &isAsk);
   if (isAsk)
   {
     Firebase.RTDB.setBool(&fbdo, "/pump/1/is_ask", false);

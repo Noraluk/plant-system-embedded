@@ -35,15 +35,17 @@ void connectWifi()
 void connectFirebase()
 {
 	config.api_key = API_KEY;
+	config.database_url = DATABASE_URL;
+
+	Firebase.reconnectWiFi(true);
 
 	auth.user.email = USER_EMAIL;
 	auth.user.password = USER_PASSWORD;
 
-	config.database_url = DATABASE_URL;
-	config.token_status_callback = tokenStatusCallback;
+	config.token_status_callback = tokenStatusCallback; // see addons/TokenHelper.h
+	config.max_token_generation_retry = 5;
 
 	Firebase.begin(&config, &auth);
-	Firebase.reconnectWiFi(true);
 
 	Serial.println("connecting to firebase");
 	while (Firebase.ready() == false)
