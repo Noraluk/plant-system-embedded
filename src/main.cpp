@@ -11,6 +11,8 @@ int pump = 5;
 int pumpVal = 0;
 bool isAsk = false;
 
+unsigned long dataMillis = 0;
+
 void setup()
 {
   pinMode(pump, OUTPUT);
@@ -22,13 +24,18 @@ void setup()
 
 void loop()
 {
-  Firebase.RTDB.getBool(&fbdo, "pump/1/is_ask", &isAsk);
-  if (isAsk)
+  if (Firebase.ready() && millis() - dataMillis > 5000)
   {
-    Firebase.RTDB.setBool(&fbdo, "/pump/1/is_ask", false);
-    Firebase.RTDB.setBool(&fbdo, "/pump/1/is_working", true);
-  }
+    dataMillis = millis();
+    Firebase.getBool(fbdo, "pump/1/is_ask", &isAsk);
+    if (isAsk)
+    {
+      Firebase.setBool(fbdo, "/pump/1/is_ask", false);
+      Firebase.setBool(fbdo, "/pump/1/is_working", true);
+    }
 
-  Firebase.RTDB.getInt(&fbdo, "/pump/1/is_active", &pumpVal);
-  digitalWrite(pump, pumpVal);
+    Serial.printf("Get is active... %s\n", Firebase.getInt(fbdo, "/pump/1/is_active", &pumpVal) ? "ok" : fbdo.errorReason().c_str());
+
+    digitalWrite(pump, pumpVal);
+  }
 }
